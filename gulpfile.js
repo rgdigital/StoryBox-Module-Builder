@@ -17,6 +17,11 @@ var concat      = require('gulp-concat');
 var uglify      = require('gulp-uglify');
 var cleanCSS    = require('gulp-clean-css');
 var debug       = require('gulp-debug');
+var include     = require("gulp-include");
+var html2js     = require('gulp-html2js');
+var injectCSS   = require('gulp-inject-css');
+var replace     = require('gulp-replace');
+var uglifycss   = require('uglifycss');
 
 // var imagemin    = require('gulp-imagemin');
 // var zip         = require('gulp-zip');
@@ -122,6 +127,52 @@ gulp.task('html', function(done) {
   gulp.src('src/index.html')
       .pipe(gulp.dest('dist/'))
       done();
+});
+
+gulp.task('theme-css', function(done) {
+  
+  var themePath = 'application/preview/themes/';
+  var themeFilename = 'style.scss';
+
+  gulp.src(themePath + '/**/public/css/' + themeFilename, { base: "." })
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(gulp.dest("./"))
+    .on('end', done);
+
+});
+
+// Compile theme files
+gulp.task('theme-view', function(done) {
+
+  var themePath = 'application/preview/themes/';
+  var themeFilename = 'index.html';
+
+function injectCSS(contents, filepath) {
+  var regex = /<link ([^>]*?)href\s*=\s*(['"])([^\2]*?)\2\1*>/g;
+  var inlineCss = "";
+  while ((m = regex.exec(contents)) !== null) {
+      if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+      }
+      var css = fs.readFileSync(filepath + 'public/css/' + m[3], 'utf8');
+      contents = contents.replace(m[0], '<style>\n' + uglifycss.processString(css) + '\n</style>');
+  }
+  return contents;
+}
+
+  gulp.src(themePath + '/**/' + themeFilename)
+    // Inject
+    .pipe(tap(function (file, t) {
+      var contents = file.contents.toString();
+      var filename = path.basename(file.path);
+      var filepath = file.path.replace(filename, '');
+      contents = injectCSS(contents, filepath);
+      file.contents = Buffer.from(contents);
+    }))
+    .pipe(include())
+    .pipe(rename('index.html'))
+    .pipe(gulp.dest('dist/'))
+    .on('end', done);
 });
 
 /*

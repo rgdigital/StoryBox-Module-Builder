@@ -17,8 +17,11 @@
     "gulp-concat": "^2.6.0",
     "gulp-debug": "^4.0.0",
     "gulp-html-partial": "^1.0.1",
+    "gulp-html2js": "^0.4.2",
     "gulp-imagemin": "^3.3.0",
+    "gulp-include": "^2.3.1",
     "gulp-inject": "^4.3.0",
+    "gulp-inject-css": "^2.0.0",
     "gulp-inject-file": "0.0.18",
     "gulp-inject-string": "^1.1.0",
     "gulp-inline-source": "^3.1.0",
@@ -34,7 +37,9 @@
     "gulp-uglify": "^3.0.1",
     "gulp-zip": "^4.0.0",
     "merge-stream": "^1.0.1",
-    "run-sequence": "^2.2.1"
+    "minify-css-string": "^1.0.0",
+    "run-sequence": "^2.2.1",
+    "uglifycss": "0.0.29"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
