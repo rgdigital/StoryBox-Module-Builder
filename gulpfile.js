@@ -1,0 +1,146 @@
+// Dependancies
+var gulp        = require('gulp');
+var fs          = require("fs");
+var path        = require('path');
+var browserSync = require('browser-sync').create();
+var request     = require('request');
+var http        = require('http');
+var https       = require('https');
+var download    = require('download-file')
+var prettyError = require('gulp-prettyerror');
+var sourcemaps  = require('gulp-sourcemaps');
+var tap         = require('gulp-tap');
+var getImageUrls = require('get-image-urls');
+var sass        = require('gulp-sass');
+var rename      = require('gulp-rename');
+var concat      = require('gulp-concat');
+var uglify      = require('gulp-uglify');
+var cleanCSS    = require('gulp-clean-css');
+var debug       = require('gulp-debug');
+
+// var imagemin    = require('gulp-imagemin');
+// var zip         = require('gulp-zip');
+// var template    = require('gulp-html-compile');
+// var merge       = require('merge-stream');
+
+// Types
+var type = {};
+    type.img = '.{jpeg,jpg,png,gif,svg,cur,ico}';
+    type.font = '.{eot,ttf,otf,woff,woff2,svg}';
+    type.video = '.{mp4,ogv,webm}';
+    type.audio = '.{wav,mp3}';
+
+var config = {
+    // server: {
+        // baseDir: './'
+    // },
+    // proxy: "http://localhost/rgdigital/StoryBox_Modules/dist/",
+    // proxy: "http://localhost:8080/StoryBox_Modules/dist/",
+    proxy: "http://localhost/StoryBox/StoryBox-Module-Builder/dist/",
+    // proxy: "http://localhost:8080/StoryBox/StoryBox-Module-Builder/dist/",
+    files: [
+        './public/css/*.css'
+    ],
+    // browser: 'google chrome canary',
+    notify: false
+};
+
+// Reload browser
+function reload(done) {
+  browserSync.reload();
+  done();
+}
+
+// Serve files
+gulp.task('serve', function(done) {
+
+  // initialize browsersync
+  browserSync.init(config);
+  done();
+});
+
+/* ----------------------------------------------
+ * CSS Tasks
+ */
+// Compile CSS / Sass
+// @src source files
+// @name filename
+// @dest detination folder
+// @useSass use Sass or CSS (default false = CSS)
+function compileCss(src, name, dest, useSass, done) {
+  useSass = useSass || false;
+  gulp.src(src)
+    .pipe(sourcemaps.init())
+    .pipe(useSass ? sass({outputStyle: 'compressed'}).on('error', sass.logError) : cleanCSS())
+    .pipe(concat(name))
+    .pipe(sourcemaps.write())
+    .pipe(rename(name))
+    .pipe(gulp.dest(dest))
+    .pipe(browserSync.stream());
+    done();
+}
+
+// Compile Frontend Sass
+gulp.task('frontend-sass', function(done) {
+  compileCss('src/public/css/scss/style.scss', 'style.min.css', 'dist/', true, done);
+});
+
+/* ----------------------------------------------
+ * CSS Tasks
+ */
+function compileJs(src, name, dest, done) {
+  gulp.src(src)
+    .pipe(prettyError())
+    // .pipe(debug())
+    .pipe(sourcemaps.init())
+    .pipe(concat(name))
+    .pipe(uglify())
+    .pipe(sourcemaps.write())
+    .pipe(rename(name))
+    .pipe(gulp.dest(dest))
+    .pipe(browserSync.stream());
+    done();
+}
+
+// Compile Backend JS
+gulp.task('frontend-js', function(done) {
+  compileJs([
+    'src/public/js/app.js',
+    'src/public/js/**/*.js',
+    '!src/public/js/app.min.js'
+  ], 'app.min.js', 'dist/', done)
+});
+
+// Default
+gulp.task('default', gulp.series('serve', function(done) {done()}));
+// gulp.task('compile', gulp.series('css', 'js', function(done) {done()}));
+gulp.task('css', gulp.series('frontend-sass', function(done) {done()}));
+gulp.task('js', gulp.series('frontend-js', function(done) {done()}));
+
+// Compile Backend JS
+gulp.task('html', function(done) {
+  gulp.src('src/index.html')
+      .pipe(gulp.dest('dist/'))
+      done();
+});
+
+/*
+ * Watch for file changes and compile
+ */
+// HTML
+gulp.task('watch:html', function () {
+  gulp.watch('src/index.html', gulp.series('html', reload));
+});
+// CSS
+gulp.task('watch:styles', function () {
+  gulp.watch('src/public/css/scss/**/*.scss', gulp.series('frontend-sass'));
+});
+// JS
+gulp.task('watch:js', function () {
+  gulp.watch(['src/public/js/**/*.js'], gulp.series('frontend-js'));
+});
+// Watch
+gulp.task('default', gulp.series(
+  'serve',
+  gulp.parallel('watch:styles', 'watch:js', 'watch:html')
+));
