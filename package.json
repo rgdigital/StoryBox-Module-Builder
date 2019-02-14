@@ -7,17 +7,21 @@
   "devDependencies": {
     "@moebius/http-graceful-shutdown": "^1.0.1",
     "browser-sync": "^2.11.1",
+    "cli-color": "^1.4.0",
     "connect-modrewrite": "^0.10.2",
+    "cors": "^2.8.5",
     "download-file": "^0.1.5",
     "express": "^4.16.3",
-    "fancy-log": "^1.3.2",
+    "fancy-log": "^1.3.3",
     "get-image-urls": "^1.0.5",
     "gulp": "^4.0.0",
     "gulp-clean-css": "^3.9.4",
     "gulp-concat": "^2.6.0",
     "gulp-debug": "^4.0.0",
     "gulp-html-partial": "^1.0.1",
+    "gulp-html-to-js": "0.0.7",
     "gulp-html2js": "^0.4.2",
+    "gulp-if": "^2.0.2",
     "gulp-imagemin": "^3.3.0",
     "gulp-include": "^2.3.1",
     "gulp-inject": "^4.3.0",
@@ -26,6 +30,7 @@
     "gulp-inject-string": "^1.1.0",
     "gulp-inline-source": "^3.1.0",
     "gulp-live-server": "0.0.31",
+    "gulp-nodemon": "^2.4.2",
     "gulp-order": "^1.1.1",
     "gulp-prettyerror": "^1.1.1",
     "gulp-rename": "^1.2.2",
@@ -38,11 +43,17 @@
     "gulp-zip": "^4.0.0",
     "merge-stream": "^1.0.1",
     "minify-css-string": "^1.0.0",
+    "require-dir": "^1.2.0",
     "run-sequence": "^2.2.1",
     "uglifycss": "0.0.29"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "config": {
+    "server": {
+      "expressPort": 1337
+    }
   },
   "author": "",
   "license": "ISC"
