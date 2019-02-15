@@ -8,6 +8,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 	var tap 		= require('gulp-tap');
 	var rename      = require('gulp-rename');
 	var include     = require("gulp-include");
+	var decache 	= require('decache');
 
 	// Paths + filenames
 	var projectRoot = '../../../../../';
@@ -15,11 +16,6 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 
 	var themeData = JSON.parse(fs.readFileSync('./application/database/config.json'))
 	var activeTheme = themeData.theme.activeTheme;
-	var themehtml = require(projectRoot + 'system/themes/themehtml.js');
-	var theme = themehtml[activeTheme];
-
-	var themesCSS = require(projectRoot + 'system/themes/themecss.js')
-	var themeCSS = themesCSS[activeTheme];
 
 	var srcContent = '';
 
@@ -28,6 +24,8 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 	  gulp.src(src)
 	  	// Switch to active theme prior to injection
 	    .pipe(tap(function (file) {
+			var themehtml = require(projectRoot + 'system/themes/themehtml.js');
+			var theme = themehtml[activeTheme];
 			var contents = theme.toString();
 			file.contents = Buffer.from(contents);
 	    }))
@@ -40,8 +38,13 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 		}))
 		// Inject theme CSS
 	    .pipe(tap(function (file) {
+	    	// Clear require cache per module
+			decache(projectRoot + 'system/themes/themecss.js');
+			// Get a fresh one
+			var themesCSS = require(projectRoot + 'system/themes/themecss.js')
+			var themeCSS = themesCSS[activeTheme].toString();
 			var contents = file.contents.toString();
-			contents = contents.replace('<!-- THEMECSS -->', '<script>('+themeCSS.toString()+')()</script>')
+			contents = contents.replace('<!-- THEMECSS -->', '<script>('+themeCSS+')()</script>')
 			// themeCSS.toString()
 			// console.log(themeCSS)
 			file.contents = Buffer.from(contents);

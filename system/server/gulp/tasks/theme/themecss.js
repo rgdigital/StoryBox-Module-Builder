@@ -3,6 +3,8 @@
 // ========
 module.exports = function(gulp, config, tools, database, browserSync) {
 
+	var taskDependancies = tools.getTaskDependancies(['theme/themehtml', 'project/projecthtml']);
+
 	// Paths + filenames
 	var themePath 	= './system/themes';
 	var themeFilename = 'style.scss';
@@ -58,7 +60,5 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 		    .pipe(gulp.dest('system/themes/'))
 		    .on('end', done);
 	});
-
-	// gulp.watch(themePath + '/**/' + themeFilename, gulp.series('theme/themecss'));
 
 };

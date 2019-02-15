@@ -2,7 +2,7 @@
 // serve.js
 // ========
 module.exports = function(gulp, config, tools, database, browserSync) {
-
+	
 	// Paths + filenames
 	var themePath 	= './system/themes';
 	var themeFilename = 'index.html';
