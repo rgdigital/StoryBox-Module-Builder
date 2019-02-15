@@ -6,4 +6,5 @@
 
 ## Tasks -
 `gulp` : Default task for project development
+
 `gulp theme/dev` : Task for creating themes
