@@ -12,7 +12,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 	// gulp.task('default', gulp.parallel(taskDependancies), function(done) {
 
 	// Compile project CSS
-	gulp.task('projectcss', function(done) {
+	gulp.task('project/projectcss', function(done) {
 		gulp.src('application/src/public/css/scss/style.scss')
 			.pipe(sourcemaps.init())
 			.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
@@ -24,6 +24,6 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 			done(); // Fix
 	});
 
-	gulp.watch('application/src/public/css/scss/style.scss', gulp.series('projectcss'));
+	gulp.watch('application/src/public/css/scss/style.scss', gulp.series('project/projectcss'));
 
 };

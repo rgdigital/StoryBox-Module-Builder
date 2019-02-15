@@ -1,6 +1,1 @@
-{
-	"theme": {
-		"themes" : ["default"],
-		"activeTheme" : "default"
-	}
-}
+{"theme":{"themes":["default","gsma"],"activeTheme":"default"}}

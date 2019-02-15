@@ -30,11 +30,11 @@ module.exports = {
 		var obj = db.theme;
 		if (obj.themes.indexOf(themeName) > -1) {
 			// Theme exists
-			tools.log('Theme exists: '+themeName);
+			tools.log('\''+themeName+'\' theme exists, updated.');
 		} else {
 			// New theme
-			obj.themes = themeName;
-			this.update('theme', obj, 'Theme added: '+themeName);
+			obj.themes.push(themeName);
+			this.add('theme', obj,'\''+themeName+'\' theme added.');
 		}
 	}
 };

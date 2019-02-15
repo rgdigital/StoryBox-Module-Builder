@@ -1,0 +1,3 @@
+module.exports = Object.create(null)
+module.exports['default'] = '<!DOCTYPE html>\n<html>\n<head>\n	<title>StoryBox | Default Theme Preview</title>\n\n	<meta name="viewport" content="width=device-width, initial-scale=1">\n\n	<!-- THEMECSS -->\n\n</head>\n<body>\n	\n	<h3>StoryBox Preview</h3>\n\n	<div class="wrapper">\n\n	<!--=include index.html -->\n\n	</div>\n\n</body>\n</html>'
+module.exports['gsma'] = '<!DOCTYPE html>\n<html>\n<head>\n	<title>StoryBox | GSMA Theme Preview</title>\n\n	<meta name="viewport" content="width=device-width, initial-scale=1">\n\n	<!-- <link rel="stylesheet" type="text/css" href="style.css"> -->\n\n</head>\n<body>\n	\n	<h3>StoryBox Preview</h3>\n\n	<div class="wrapper">\n\n	<!--=include index.html -->\n\n	</div>\n\n</body>\n</html>'

@@ -12,13 +12,13 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 	var prettyError = require('gulp-prettyerror');
 
 	// Paths + filenames
-	var projectRoot = '../../../../';
+	var projectRoot = '../../../../../';
 	var src = './application/src/public/js/*.js';
 
 	var themeData = JSON.parse(fs.readFileSync('./application/database/config.json'))
 
 	// Compile project JS
-	gulp.task('projectjs', function(done) {
+	gulp.task('project/projectjs', function(done) {
 		gulp.src(src)
 			.pipe(prettyError())
 			.pipe(sourcemaps.init())
@@ -34,6 +34,6 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 		done();
 	}
 
-	gulp.watch('application/src/public/js/*.js', gulp.series('projectjs', reload));
+	gulp.watch('application/src/public/js/*.js', gulp.series('project/projectjs', reload));
 
 };
