@@ -4,9 +4,8 @@
 module.exports = function(gulp, config, tools, database, browserSync) {
 
 	var nodemon     = require('gulp-nodemon');
-	// var taskDependancies = tools.getTaskDependancies('projectcss');
 	
-	gulp.task('serve', function(done) {
+	gulp.task('project/serve', function(done) {
 		// Express server
 		nodemon({
 			script: 'system/server/express/server.js',
@@ -22,6 +21,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 					],
 					index: "index.html",
 					files: [
+						// 'application/dist/',
 						// 'application/config/config.json',
 						// 'build/dist/**',
 					]
