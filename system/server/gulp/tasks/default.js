@@ -3,7 +3,7 @@
 // ========
 module.exports = function(gulp, config, tools) {
 
-	var taskDependancies = tools.getTaskDependancies(['serve', 'project/projectcss', 'project/projectjs', 'project/projecthtml']);
+	var taskDependancies = tools.getTaskDependancies(['serve', 'project/projectcss', 'project/projectjs', 'project/projecthtml', 'project/projectassets']);
 	
 	gulp.task('default', gulp.parallel(taskDependancies), function(done) {
 		done();

@@ -11,19 +11,26 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 	// var taskDependancies = tools.getTaskDependancies('serve');
 	// gulp.task('default', gulp.parallel(taskDependancies), function(done) {
 
+	var filetypes = {
+		img : '.{jpeg,jpg,png,gif,svg,cur,ico}',
+		font : '.{eot,ttf,otf,woff,woff2,svg}',
+		video : '.{mp4,ogv,webm}',
+		audio : '.{wav,mp3}'
+	}
+
 	// Compile project CSS
-	gulp.task('project/projectcss', function(done) {
-		gulp.src('application/src/public/css/scss/style.scss')
-			.pipe(sourcemaps.init())
-			.pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
-			.pipe(sourcemaps.write())
-			.pipe(rename('style.min.css'))
+	gulp.task('project/projectassets', function(done) {
+		gulp.src([
+				'application/src/**/*' + filetypes.img,
+				'application/src/**/*' + filetypes.font,
+				'application/src/**/*' + filetypes.video,
+				'application/src/**/*' + filetypes.audio
+			])
 			.pipe(gulp.dest('application/dist/'))
-			.pipe(gulpif(!!browserSync.active, browserSync.stream()))
 			.on('end', done);
 			done(); // Fix
 	});
 
-	gulp.watch('application/src/public/css/scss/**/*.scss', gulp.series('project/projectcss'));
+	gulp.watch('application/src/public/**/*'+filetypes.img, gulp.series('project/projectassets'));
 
 };
