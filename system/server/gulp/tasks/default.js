@@ -2,10 +2,8 @@
 // console.js
 // ========
 module.exports = function(gulp, config, tools) {
-	var gutil = require('gulp-util');
-	var tasks = ['serve', 'projectcss'];
 
-	var taskDependancies = tools.getTaskDependancies(['serve', 'projectcss']);
+	var taskDependancies = tools.getTaskDependancies(['serve', 'projectcss', 'projectjs', 'projecthtml']);
 	
 	gulp.task('default', gulp.parallel(taskDependancies), function(done) {
 		done();

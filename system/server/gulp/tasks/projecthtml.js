@@ -11,7 +11,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 
 	// Paths + filenames
 	var projectRoot = '../../../../';
-	var srcPath = './application/src/index.html';
+	var src = './application/src/index.html';
 
 	var themeData = JSON.parse(fs.readFileSync('./application/database/config.json'))
 	var activeTheme = themeData.theme.activeTheme;
@@ -22,7 +22,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 
 	// Compile project html
 	gulp.task('projecthtml', function(done) {
-	  gulp.src(srcPath)
+	  gulp.src(src)
 	  	// Switch to active theme prior to injection
 	    .pipe(tap(function (file) {
 			var contents = theme.toString();
@@ -38,5 +38,12 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 	    .pipe(gulp.dest('application/dist/'))
 	    .on('end', done);
 	});
+
+	function reload(done) {
+		browserSync.reload();
+		done();
+	}
+
+	gulp.watch(src, gulp.series('projecthtml', reload));
 
 };

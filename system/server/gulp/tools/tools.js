@@ -44,7 +44,6 @@ module.exports = {
 		}
 		// Instantiate modules
 		for (var i = 0; i < dependancyTaskNames.length; i++) {
-			console.log(dependancyTaskNames[i]);
 			module.require('../tasks/'+dependancyTaskNames[i])(gulp, config, tools, database, browserSync);
 		}
 		return dependancyTaskNames;

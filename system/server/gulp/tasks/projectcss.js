@@ -22,8 +22,8 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 			.pipe(gulpif(!!browserSync.active, browserSync.stream()))
 			.on('end', done);
 			done(); // Fix
-
-		gulp.watch('application/src/public/css/scss/style.scss', gulp.series('projectcss'));
 	});
+
+	gulp.watch('application/src/public/css/scss/style.scss', gulp.series('projectcss'));
 
 };
