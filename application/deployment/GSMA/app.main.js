@@ -1,0 +1,1 @@
+StoryBox.Module.Hello_World=function(o){this.Viewport=this.Helpers.Viewport,this.instances=this.getInstances()},StoryBox.Module.Hello_World.prototype.getInstances=function(){console.log("Hello World")};
