@@ -24,7 +24,7 @@ $image_path = plugin_dir_url( __FILE__ ) . "public/img/";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/TweenMax.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/easing/EasePack.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.2/plugins/ScrollToPlugin.min.js"></script>
-<link href="style.min.css" rel="stylesheet" />
+<link href="http://localhost:3000/style.min.css" rel="stylesheet" />
 
 <!-- StoryBox Core -->
 <script src="https://res.cloudinary.com/rgdigital/raw/upload/v1549037754/StoryBox/core/storybox.min.js"></script>
@@ -33,10 +33,14 @@ $image_path = plugin_dir_url( __FILE__ ) . "public/img/";
 <p>Lorem ipsum dolor sit amet</p>
 
 <!-- Scripts -->
-<script type="text/javascript" src="app.min.js"></script>
+<script type="text/javascript" src="http://localhost:3000/app.min.js"></script>
 
 <script type="text/javascript">
-	var StoryBox = new StoryBox();
+	var StoryBox = new StoryBox({
+		url : {
+			base : 'http://localhost:3000/'
+		}
+	});
 </script>
 
   	</div><!--end .left-->

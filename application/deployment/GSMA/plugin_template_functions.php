@@ -18,7 +18,7 @@ include 'page_templater.php';
  */
 function inline_script_storybox_template_plugin() {
 	echo '<script type="text/javascript">';
-	echo "var imagePath = \"http://localhost/\";\n";
+	echo "var imagePath = \"http://localhost:3000/\";\n";
 	echo '</script>';
 }
 add_action( 'wp_head', 'inline_script_storybox_template_plugin', 0 );

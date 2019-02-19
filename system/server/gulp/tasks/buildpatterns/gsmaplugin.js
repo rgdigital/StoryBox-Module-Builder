@@ -118,7 +118,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 
 		// Compile all JS libs and src
 		compileJS('application/dist/app.min.js',
-			'app.main.js',
+			'app.min.js',
 			'application/deployment/' + deploymentName,
 		done);
 
