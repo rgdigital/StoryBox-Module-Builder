@@ -1,5 +1,6 @@
 {"project" : {
 	"template_name" : "StoryBox Template Plugin",
+	"template_shortname" : "storybox_template_plugin",
 	"template_description" : "Template for StoryBox Template Plugin.",
 	"base_url" : "http://localhost/"
 },"theme":{"themes":["default","gsma"],"activeTheme":"default"}}

@@ -6,7 +6,7 @@
  * License: none (free to use)
  */
 
-class PageTemplater {
+class PageTemplater_<!--##TEMPLATESHORTNAME##--> {
 
   /**
    * A reference to an instance of this class.
@@ -24,7 +24,7 @@ class PageTemplater {
   public static function get_instance() {
 
     if ( null == self::$instance ) {
-      self::$instance = new PageTemplater();
+      self::$instance = new PageTemplater_<!--##TEMPLATESHORTNAME##-->();
     } 
 
     return self::$instance;
@@ -156,6 +156,6 @@ class PageTemplater {
   }
 
 } 
-add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
+add_action( 'plugins_loaded', array( 'PageTemplater_<!--##TEMPLATESHORTNAME##-->', 'get_instance' ) );
 
 ?>

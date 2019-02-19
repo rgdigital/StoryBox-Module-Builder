@@ -69,12 +69,14 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 				var contents = template.replace('<!-- ##MAINFILE## -->', file.contents);
 				// String replacement names
 				var template_name = projectData.project.template_name;
+				var template_shortname = projectData.project.template_shortname;
 				var template_description = projectData.project.template_description;
 				var base_url = projectData.project.base_url;
 				// Replace
-				contents = contents.replace('<!--##TEMPLATENAME##-->', template_name)
-				contents = contents.replace('<!--##TEMPLATEDESC##-->', template_description)
-				contents = contents.replace('<!--##BASEURL##-->', base_url)
+				contents = contents.replace(/<!--##TEMPLATESHORTNAME##-->/g, template_shortname)
+				contents = contents.replace(/<!--##TEMPLATENAME##-->/g, template_name)
+				contents = contents.replace(/<!--##TEMPLATEDESC##-->/g, template_description)
+				contents = contents.replace(/<!--##BASEURL##-->/g, base_url)
 				// Buffer back to the stream
 				file.contents = Buffer.from(contents);
 			}))
@@ -88,12 +90,14 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 				var contents = file.contents.toString();
 				// String replacement names
 				var template_name = projectData.project.template_name;
+				var template_shortname = projectData.project.template_shortname;
 				var template_description = projectData.project.template_description;
 				var base_url = projectData.project.base_url;
 				// Replace
-				contents = contents.replace('<!--##TEMPLATENAME##-->', template_name)
-				contents = contents.replace('<!--##TEMPLATEDESC##-->', template_description)
-				contents = contents.replace('<!--##BASEURL##-->', base_url)
+				contents = contents.replace(/<!--##TEMPLATESHORTNAME##-->/g, template_shortname)
+				contents = contents.replace(/<!--##TEMPLATENAME##-->/g, template_name)
+				contents = contents.replace(/<!--##TEMPLATEDESC##-->/g, template_description)
+				contents = contents.replace(/<!--##BASEURL##-->/g, base_url)
 				// Buffer back to the stream
 				file.contents = Buffer.from(contents);
 			}))
@@ -130,7 +134,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 		// Compile HTML
 		compileHTML(
 			'./application/src/index.html',
-			'template.php',
+			'template_view.php',
 			'application/deployment/' + deploymentName,
 			done
 		);
@@ -141,7 +145,6 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 				themePackage + 'page_templater.php',
 				themePackage + 'tenacitysidebar.php',
 				themePackage + 'gsmapull.php',
-				themePackage + 'template_view.php',
 				themePackage + 'plugin_template_functions.php'
 			],
 			'application/deployment/' + deploymentName,

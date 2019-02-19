@@ -16,14 +16,14 @@ include 'page_templater.php';
 /* 
  * Load CSS and JS for this plugin
  */
-function add_inline_script() {
+function inline_script_<!--##TEMPLATESHORTNAME##-->() {
 	echo '<script type="text/javascript">';
 	echo "var imagePath = \"<!--##BASEURL##-->\";\n";
 	echo '</script>';
 }
-add_action( 'wp_head', 'add_inline_script', 0 );
+add_action( 'wp_head', 'inline_script_<!--##TEMPLATESHORTNAME##-->', 0 );
 
-function storybox_template_scripts(){
+function template_script_<!--##TEMPLATESHORTNAME##-->(){
 	
 	wp_register_style( 'storybox-css',  plugin_dir_url( __FILE__ ) . 'public/css/style.min.css' );
 	wp_enqueue_style( 'storybox-css' );
@@ -34,6 +34,6 @@ function storybox_template_scripts(){
 	wp_register_script( 'storybox-jsapp',  plugin_dir_url(__FILE__) . 'public/js/app.min.js' );
 	wp_enqueue_script( 'storybox-jsapp' );
 }
-add_action( 'wp_enqueue_scripts', 'storybox_template_scripts' );
+add_action( 'wp_enqueue_scripts', 'template_scripts_<!--##TEMPLATESHORTNAME##-->' );
 
 ?>

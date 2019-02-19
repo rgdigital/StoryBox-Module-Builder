@@ -6,7 +6,7 @@
  * License: none (free to use)
  */
 
-class PageTemplater {
+class PageTemplater_storybox_template_plugin {
 
   /**
    * A reference to an instance of this class.
@@ -24,7 +24,7 @@ class PageTemplater {
   public static function get_instance() {
 
     if ( null == self::$instance ) {
-      self::$instance = new PageTemplater();
+      self::$instance = new PageTemplater_storybox_template_plugin();
     } 
 
     return self::$instance;
@@ -156,6 +156,6 @@ class PageTemplater {
   }
 
 } 
-add_action( 'plugins_loaded', array( 'PageTemplater', 'get_instance' ) );
+add_action( 'plugins_loaded', array( 'PageTemplater_storybox_template_plugin', 'get_instance' ) );
 
 ?>
