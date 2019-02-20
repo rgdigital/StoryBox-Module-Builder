@@ -36,6 +36,21 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 				"./application/src"
 			]
 		}))
+	    .pipe(tap(function (file) {
+	    	var contents = file.contents.toString();
+			// String replacement names
+			var template_name = projectData.project.template_name;
+			var template_shortname = projectData.project.template_shortname;
+			var template_description = projectData.project.template_description;
+			var base_url = projectData.project.base_url;
+			// Replace
+			contents = contents.replace(/<!--##TEMPLATESHORTNAME##-->/g, template_shortname)
+			contents = contents.replace(/<!--##TEMPLATENAME##-->/g, template_name)
+			contents = contents.replace(/<!--##TEMPLATEDESC##-->/g, template_description)
+			contents = contents.replace(/<!--##BASEURL##-->/g, base_url)
+			// Buffer back to the stream
+			file.contents = Buffer.from(contents);
+	    }))
 		// Inject theme CSS
 	    .pipe(tap(function (file) {
 	    	// Clear require cache per module
