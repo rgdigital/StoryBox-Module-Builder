@@ -14,8 +14,8 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 	var projectRoot = '../../../../../';
 	var src = './application/src/index.html';
 
-	var themeData = JSON.parse(fs.readFileSync('./application/database/config.json'))
-	var activeTheme = themeData.theme.activeTheme;
+	var projectData = JSON.parse(fs.readFileSync('./application/database/config.json'))
+	var activeTheme = projectData.theme.activeTheme;
 
 	var srcContent = '';
 
