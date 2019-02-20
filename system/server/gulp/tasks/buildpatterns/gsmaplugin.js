@@ -7,6 +7,7 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 
 	// Dependancies
 	var fs 			= require("fs");
+	var download    = require('download-file')
 	var concat      = require('gulp-concat');
 	var rename      = require('gulp-rename');
 	var uglify      = require('gulp-uglify');
@@ -30,6 +31,60 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 		font : '.{eot,ttf,otf,woff,woff2,svg}',
 		video : '.{mp4,ogv,webm}',
 		audio : '.{wav,mp3}'
+	}
+
+	function downloadFile(uri, folderName, filename, callback){
+		download(uri, {
+			directory: 'application/deployment/' + deploymentName + '/libs',
+			filename: filename
+		}, function(err){
+			if (err) throw err;
+			callback();
+		})
+	};
+
+	function findScriptSrc(contents) {
+		var m;
+		var regex = /<script[a-z1-9"'\/ =]*?src="(.*?)"/gmi;
+		while ((m = regex.exec(contents)) !== null) {
+			console.log(m.length)
+			// This is necessary to avoid infinite loops with zero-width matches
+			if (m.index === regex.lastIndex) {
+				regex.lastIndex++;
+			}
+			// The result can be accessed through the `m`-variable.
+			m.forEach((match, groupIndex) => {
+				if (
+					groupIndex==1
+					&& match.indexOf('http')!==-1
+					&& match.indexOf('https://www.googletagmanager.com')==-1
+					&& match.indexOf('jquery')==-1
+				) {
+					// console.log(`Found match, ${match}`);
+					// var filename = match.substring(match.lastIndexOf('/')+1);
+					// downloadFile(match, filename, function() {
+					// 	console.log('downloaded')
+					// });
+					console.log(regex.lastIndex)
+				}
+			});
+		}
+		gulp.src('application/deployment/' + deploymentName + '/libs')
+			.pipe(concat('libs.min.js'))
+			.pipe(uglify())
+			.pipe(gulp.dest('application/deployment/' + deploymentName))
+	}
+
+	function downloadJsLibs(src, dist) {
+		var done = done || false;
+		gulp.src(src)
+			.pipe(tap(function (file) {
+				var contents = file.contents.toString();
+				findScriptSrc(contents);
+			}))
+			.pipe(gulp.dest(dist))
+			// .on('end', gulpif(done, done));
+			done && done();
 	}
 
 	function copyAssets(src, dist, done) {
@@ -115,6 +170,8 @@ module.exports = function(gulp, config, tools, database, browserSync) {
 				'application/src/**/*' + filetypes.audio
 		], 'application/deployment/' + deploymentName,
 		done);
+
+		downloadJsLibs('./application/src/index.html', 'application/deployment/' + deploymentName)
 
 		// Compile all JS libs and src
 		compileJS('application/dist/app.min.js',
